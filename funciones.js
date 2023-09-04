@@ -1,95 +1,78 @@
-let rectX = [], rectY = [], rectmovX = [], rectmovY = [], rectgravedad = [];
-let rect2X = [], rect2Y = [], rect2movX = [], rect2movY = [], rect2gravedad = [];
-let estado, boton, cantF, cantB, seconds, segundos, difsegundos, tiempoInicio;
-let distancia1, distancia2;
-
-function setup() {
-  createCanvas(900, 600);
-  iniciarFrutas();
-  iniciarBombas();
-  estado = 0;
-  cantF = 1;
-  cantB = 1;
-  boton = true;
-  tiempoInicio = millis();
+function iniciarFrutas() {
+  for (let i = 0; i < 10; i++) {
+    rectX[i] = random(200, 700);
+    rectY[i] = 800;
+    rectmovX[i] = random(-3, 3);
+    rectmovY[i] = random(-20, -15);
+    rectgravedad[i] = 0.4;
+  }
 }
 
-function draw() {
-  console.log (estado);
-  background(220);
-  text("x:"+ mouseX + ",y:"+ mouseY, mouseX, mouseY);
-  if (estado === 0) {
-    boton = ( mouseX > 300 ) && ( mouseX < 300+300 ) && ( mouseY > 500) && ( mouseY < 500+50);
-    push();
-    textSize (40);
-    textAlign (CENTER, CENTER);
-    textStyle (BOLD);
-    text ("Fruit Ninja", width/2, 100);
-    textSize(20);
-    text ("REGLAS:", width/2, 150);
-    textStyle (NORMAL);
-    text ("1- Corta Frutas:", width/2, 200);
-    text ("Tu objetivo principal es cortar la mayor cantidad de frutas posible en el tiempo asignado", width/2, 230);
-    text ("2- Tres Vidas:", width/2, 280);
-    text ("Comienzas con tres vidas", width/2, 310);
-    text ("Pierdes una vida si dejas caer una fruta sin cortarla antes de que desaparezca de la pantalla", width/2, 330);
-    text ("3- Evita las Bombas:", width/2, 380);
-    text ("Debes evitar a toda costa cortar las bombas que aparecen junto a las frutas", width/2, 410);
-    text ("Si cortas una bomba, el juego terminará inmediatamente", width/2, 430);
-    rect (300, 500, 300, 50);
+function moverFrutas () {
+  for (let i = 0; i < 10; i++) {
+    rectX[i] += rectmovX[i];
+    rectY[i] += rectmovY[i];
+    rectmovY[i] += rectgravedad[i];
+    if (rectY[i] > height) {
+      rectX[i] = random(300, 600);
+      rectY[i] = height;
+      rectmovX[i] = random(-4, 4);
+      rectmovY[i] = random(-20, -15);
+    }
+  }
+}
+
+function dibujarFrutas (numero) {
+  for (let i = 0; i < cantF; i++) {
+    push ();
+    fill (255);
+    rect(rectX[i], rectY[i], 100, 100);
     pop();
   }
-  if (estado === 1) {
-    background (200, 100, 255);
-    text ("PERDISTE", width/2, height/2);
-  }
-  if (estado ===2) {
-    background (100, 255, 255);
-    text ("GANASTE", width/2, height/2);
-  }
-  if (estado === 3) {
-    timer();
-    moverFrutas();
-    dibujarFrutas(cantF);
-    let tiempoActual = millis();
-    let tiempoTranscurrido = tiempoActual - tiempoInicio;
-    if ( tiempoTranscurrido >= 4000 ) {
-      estado = 4;
-      tiempoInicio = millis();
-    }
-  }
-  if (estado === 4) {
-    timer();
-    cantF = 2;
-    moverFrutas();
-    dibujarFrutas(cantF);
-    moverBombas();
-    dibujarBombas(cantB);
+}
+
+function iniciarBombas() {
+  for (let i = 0; i < 5; i++) {
+    rect2X[i] = random(200, 700); 
+    rect2Y[i] = 800;
+    rect2movX[i] = random(-3, 3); 
+    rect2movY[i] = random(-20, -15);
+    rect2gravedad[i] = 0.4;
   }
 }
-function mousePressed () {
-  if (boton) {
-    estado = 3;
-  }
 
-  //if (estado === 4) {
-    for (let i = 0; i < cantB; i++) {
-     // distancia2 = dist (mouseX, mouseY, rect2X[i], rect2Y[i]);
-   //   if (distancia2 <= 40) {
-      if (mouseX + 100 > rect2x[i] && mouseX < rect2x[i] + 100 && mouseY + 100 > rect2y[i] && mouseY < rect2y[i] + 100){
-        estado = 1;
-      }
-    //}
-  }
-  
-  for (let i = 0; i < cantF; i++) {
-   // distancia1 = dist (mouseX, mouseY, rectX[i], rectY[i]);
-   // if (distancia1 <= 35) {
-     if (mouseX + 100 > rectx[i] && mouseX < rectx[i] + 100 && mouseY + 100 > recty[i] && mouseY < recty[i] + 100){
-      rectX[i] = -100;
-      rectY[i] = -100;
-      rectmovX[i] = 0;
-      rectmovY[i] = 0;
+function moverBombas () {
+  for (let i = 0; i < 5; i++) {
+    rect2X[i] += rect2movX[i];
+    rect2Y[i] += rect2movY[i];
+    rect2movY[i] += rect2gravedad[i];
+    if (rect2Y[i] > height) {
+      rect2X[i] = random(300, 600);
+      rect2Y[i] = height;
+      rect2movX[i] = random(-4, 4);
+      rect2movY[i] = random(-20, -15);
     }
   }
+}
+
+function dibujarBombas (numero) {
+  for (let i = 0; i < cantB; i++) {
+    push();
+    fill(0);
+    rect(rect2X[i], rect2Y[i], 100,100); 
+    pop();
+  }
+}
+
+function timer() {
+  push();
+  textSize(40);
+  fill(0);
+  let seconds = millis() / 1000;
+  let sec = floor(seconds) % 60;
+  let min = floor(seconds / 60);
+  let formattedMin = nf(min, 2);
+  let formattedSec = nf(sec, 2);
+  text(formattedMin + ":" + formattedSec, 10, 50);
+  pop();
 }
