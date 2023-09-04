@@ -1,7 +1,12 @@
 let rectX = [], rectY = [], rectmovX = [], rectmovY = [], rectgravedad = [];
 let rect2X = [], rect2Y = [], rect2movX = [], rect2movY = [], rect2gravedad = [];
-let estado, boton, cantF, cantB, seconds, segundos, difsegundos, tiempoInicio;
+let estado, boton, cantF, cantB, seconds, segundos, difsegundos, tiempoInicio, frutas = [], fondo, bomba, X, miFuente;
 let distancia1, distancia2;
+
+function preload () {
+  cargaArchivos();
+}
+
 
 function setup() {
   createCanvas(900, 600);
@@ -12,19 +17,23 @@ function setup() {
   cantB = 1;
   boton = true;
   tiempoInicio = millis();
+  textFont(miFuente);
 }
 
 function draw() {
   console.log (estado);
-  background(220);
+  image (fondo, 0, 0);
+  fondo.resize (900,600);
   text("x:"+ mouseX + ",y:"+ mouseY, mouseX, mouseY);
   if (estado === 0) {
     boton = ( mouseX > 300 ) && ( mouseX < 300+300 ) && ( mouseY > 500) && ( mouseY < 500+50);
     push();
-    textSize (40);
+    fill(230,200,50);
+    textSize (60);
     textAlign (CENTER, CENTER);
     textStyle (BOLD);
     text ("Fruit Ninja", width/2, 100);
+    fill (230);
     textSize(20);
     text ("REGLAS:", width/2, 150);
     textStyle (NORMAL);
@@ -72,22 +81,16 @@ function mousePressed () {
     estado = 3;
   }
 
-  //if (estado === 4) {
-    for (let i = 0; i < cantB; i++) {
-     // distancia2 = dist (mouseX, mouseY, rect2X[i], rect2Y[i]);
-   //   if (distancia2 <= 40) {
-      if (mouseX + 100 > rect2x[i] && mouseX < rect2x[i] + 100 && mouseY + 100 > rect2y[i] && mouseY < rect2y[i] + 100){
-        estado = 1;
-      }
-    //}
+  for (let j = 0; j < cantB; j++) {
+    if (mouseX + 100 > rect2X[j] && mouseX < rect2X[j] + 100 && mouseY + 100 > rect2Y[j] && mouseY < rect2Y[j] + 100) {
+      estado = 1;
+    }
   }
-  
+
   for (let i = 0; i < cantF; i++) {
-   // distancia1 = dist (mouseX, mouseY, rectX[i], rectY[i]);
-   // if (distancia1 <= 35) {
-     if (mouseX + 100 > rectx[i] && mouseX < rectx[i] + 100 && mouseY + 100 > recty[i] && mouseY < recty[i] + 100){
-      rectX[i] = -100;
-      rectY[i] = -100;
+    if (mouseX + 100 > rectX[i] && mouseX < rectX[i] + 100 && mouseY + 100 > rectY[i] && mouseY < rectY[i] + 100) {
+      rectX[i] = -1000;
+      rectY[i] = -1000;
       rectmovX[i] = 0;
       rectmovY[i] = 0;
     }
