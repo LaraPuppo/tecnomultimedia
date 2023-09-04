@@ -1,5 +1,5 @@
-let ellipseX = [], ellipseY = [], ellipsemovX = [], ellipsemovY = [], ellipsegravedad = [];
-let ellipse2X = [], ellipse2Y = [], ellipse2movX = [], ellipse2movY = [], ellipse2gravedad = [];
+let rectX = [], rectY = [], rectmovX = [], rectmovY = [], rectgravedad = [];
+let rect2X = [], rect2Y = [], rect2movX = [], rect2movY = [], rect2gravedad = [];
 let estado, boton, cantF, cantB, seconds, segundos, difsegundos, tiempoInicio;
 let distancia1, distancia2;
 
@@ -18,7 +18,7 @@ function draw() {
   console.log (estado);
   background(220);
   text("x:"+ mouseX + ",y:"+ mouseY, mouseX, mouseY);
-  if (estado == 0) {
+  if (estado === 0) {
     boton = ( mouseX > 300 ) && ( mouseX < 300+300 ) && ( mouseY > 500) && ( mouseY < 500+50);
     push();
     textSize (40);
@@ -39,15 +39,15 @@ function draw() {
     rect (300, 500, 300, 50);
     pop();
   }
-  if (estado == 1) {
+  if (estado === 1) {
     background (200, 100, 255);
     text ("PERDISTE", width/2, height/2);
   }
-  if (estado ==2) {
+  if (estado ===2) {
     background (100, 255, 255);
     text ("GANASTE", width/2, height/2);
   }
-  if (estado == 3) {
+  if (estado === 3) {
     timer();
     moverFrutas();
     dibujarFrutas(cantF);
@@ -58,7 +58,7 @@ function draw() {
       tiempoInicio = millis();
     }
   }
-  if (estado == 4) {
+  if (estado === 4) {
     timer();
     cantF = 2;
     moverFrutas();
@@ -67,24 +67,29 @@ function draw() {
     dibujarBombas(cantB);
   }
 }
-
 function mousePressed () {
   if (boton) {
-    estado=3;
+    estado = 3;
   }
+
+  //if (estado === 4) {
+    for (let i = 0; i < cantB; i++) {
+     // distancia2 = dist (mouseX, mouseY, rect2X[i], rect2Y[i]);
+   //   if (distancia2 <= 40) {
+      if (mouseX + 100 > rect2x[i] && mouseX < rect2x[i] + 100 && mouseY + 100 > rect2y[i] && mouseY < rect2y[i] + 100){
+        estado = 1;
+      }
+    //}
+  }
+  
   for (let i = 0; i < cantF; i++) {
-    distancia1 = dist (mouseX, mouseY, ellipseX[i], ellipseY[i]);
-    if (distancia1 <= 35) {
-      ellipseX[i] = -100;
-      ellipseY[i] = -100;
-      ellipsemovX[i] = 0;
-      ellipsemovY[i] = 0;
-    }
-  }
-  for (let i = 0; i < cantB; i++) {
-    distancia2= dist (mouseX, mouseY, ellipse2X[i], ellipse2Y[i]);
-    if (distancia2 <= 40) {
-      estado = 1;
+   // distancia1 = dist (mouseX, mouseY, rectX[i], rectY[i]);
+   // if (distancia1 <= 35) {
+     if (mouseX + 100 > rectx[i] && mouseX < rectx[i] + 100 && mouseY + 100 > recty[i] && mouseY < recty[i] + 100){
+      rectX[i] = -100;
+      rectY[i] = -100;
+      rectmovX[i] = 0;
+      rectmovY[i] = 0;
     }
   }
 }
