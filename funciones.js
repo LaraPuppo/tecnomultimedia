@@ -1,3 +1,15 @@
+function hover() {
+  if (boton) {
+    fill(0, 200);
+    rect (350, 510, 200, 50);
+    fill(255, 0, 0);
+  } else {
+    fill(0, 100);
+    rect (350, 510, 200, 50);
+    fill(100, 0, 0);
+  }
+}
+
 function iniciarFrutas() {
   for (let i = 0; i < 10; i++) {
     rectX[i] = random(200, 700);
@@ -27,10 +39,33 @@ function dibujarFrutas (numero) {
     push();
     noFill();
     noStroke();
-    rect(rectX[i], rectY[i], 150, 150);
-    image(frutas[i], rectX[i], rectY[i], 150, 150);
+    rect(rectX[i], rectY[i], 100, 100);
+    image(frutas[i], rectX[i]-25, rectY[i]-25, 150, 150);
     pop();
   }
+}
+
+function timer() {
+  push();
+  textSize(40);
+  fill(0);
+  let seconds = millis() / 1000;
+  let sec = floor(seconds) % 60;
+  let min = floor(seconds / 60);
+  let formattedMin = nf(min, 2);
+  let formattedSec = nf(sec, 2);
+  text(formattedMin + ":" + formattedSec, 10, 50);
+  pop();
+}
+
+function cargaArchivos () {
+  for (let i = 0; i < 9; i++) {
+    frutas[i] = loadImage ('assets/fruta'+ i + '.png');
+  }
+  fondo = loadImage ('assets/fondo.jpg');
+  bomba = loadImage ('assets/bomba.png');
+  X = loadImage ('assets/X.png');
+  miFuente = loadFont ('assets/go3v2.ttf');
 }
 
 function iniciarBombas() {
@@ -62,31 +97,14 @@ function dibujarBombas (numero) {
     push();
     noFill();
     noStroke();
-    rect(rect2X[j], rect2Y[j], 150, 150);
-    image(bomba, rect2X[j], rect2Y[j], 150, 150);
+    rect(rect2X[j], rect2Y[j], 100, 100);
+    image(bomba, rect2X[j]-25, rect2Y[j]-25, 150, 150);
     pop();
   }
 }
 
-function timer() {
-  push();
-  textSize(40);
-  fill(0);
-  let seconds = millis() / 1000;
-  let sec = floor(seconds) % 60;
-  let min = floor(seconds / 60);
-  let formattedMin = nf(min, 2);
-  let formattedSec = nf(sec, 2);
-  text(formattedMin + ":" + formattedSec, 10, 50);
-  pop();
-}
-
-function cargaArchivos () {
-  for (let i = 0; i < 9; i++) {
-    frutas[i] = loadImage ('assets/fruta'+ i + '.png');
-  }
-  fondo = loadImage ('assets/fondo.jpg');
-  bomba = loadImage ('assets/bomba.png');
-  X = loadImage ('assets/X.png');
-  miFuente = loadFont ('assets/go3v2.ttf');
+function contador(){
+  fill (255);
+  textSize(20);
+  text ("Puntos:" + frutasCortadas, 10,20);
 }
