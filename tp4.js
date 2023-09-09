@@ -3,7 +3,7 @@
 let rectX = [], rectY = [], rectmovX = [], rectmovY = [], rectgravedad = [];
 let rect2X = [], rect2Y = [], rect2movX = [], rect2movY = [], rect2gravedad = [];
 let frutas = [], frutasAleatorias = [];
-let estado, boton, cantF, cantB, fondo, bomba, x, y, miFuente, Inicio, Jugar, Creditos;
+let estado, boton, cantF, cantB, fondo, bomba, miFuente, Inicio, Jugar, Creditos;
 let frutasCortadas, lastIncrementTime, estado3StartTime, tiempoTranscurridoDesdeEstado3, yPos;
 const incrementInterval = 7000;
 
