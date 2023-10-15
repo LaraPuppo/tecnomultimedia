@@ -1,4 +1,5 @@
 // Link al video de youtube: https://www.youtube.com/watch?v=brQoqX4owqA
+//Link para acceder al juego desde cualquier compu: https://larapuppo.github.io/
 
 let rectX = [], rectY = [], rectmovX = [], rectmovY = [], rectgravedad = [];
 let rect2X = [], rect2Y = [], rect2movX = [], rect2movY = [], rect2gravedad = [];
